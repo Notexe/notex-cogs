@@ -1,0 +1,9 @@
+{
+    "author" : ["Notex"],
+    "install_msg" : "",
+    "name" : "Notex-Cogs",
+    "short" : "",
+    "description" : "",
+    "min_python_version": [3, 7, 2],
+	"tags": []
+}
