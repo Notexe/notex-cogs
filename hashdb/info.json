@@ -6,7 +6,7 @@
     "description" : "Powered by https://hitmandb.notex.app",
     "required_cogs": {},
     "requirements": [],
-    "min_bot_version": "3.8.0",
+    "min_bot_version": "3.4.11",
     "max_bot_version": "0.0.0",
     "tags": [],
     "type": "COG"
