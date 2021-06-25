@@ -1,13 +1,8 @@
 {
     "author" : ["Notex"],
-    "install_msg" : "",
     "name" : "HashDB",
     "short" : "Hitman hash lookup",
     "description" : "Powered by https://hitmandb.notex.app",
-    "required_cogs": {},
-    "requirements": [],
-    "min_bot_version": "3.4.11",
-    "max_bot_version": "0.0.0",
-    "tags": [],
-    "type": "COG"
+    "min_python_version": [3, 7, 2],
+    "end_user_data_statement": "This cog does not store user data."
 }
