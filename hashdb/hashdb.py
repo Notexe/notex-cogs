@@ -3,63 +3,88 @@ import discord
 import requests
 import random
 import hashlib
-import re
+import json
 
 class HashDB(commands.Cog):
     @commands.command()
     async def hashdb(self, ctx, string, resourcetype: str="any"):
-        async def reWriteString (res):
-            newStr = res.split('.', 1)
-            try:
-              firstSection = newStr[0].upper()
-              splitSecondSection = newStr[1].split(',', maxsplit=1)
-              secondSection = splitSecondSection[0].upper()
-              thirdSectionSplit = splitSecondSection[1].split('|')
-              thirdSection = thirdSectionSplit[0]
-            except:
-              firstSection = ""
-              secondSection = ""
-              thirdSection = ""
-    
-            d = dict()
-            d['firstSection'] = firstSection
-            d['secondSection'] = secondSection
-            d['thirdSection'] = thirdSection
-            arrOfMessages.append(d)
-            
-            global embed
-            embed = discord.Embed(title="Hash Lookup", color=0xC60000)
-            for msg in arrOfMessages:
-                embed.add_field(name=msg.get('firstSection') + '.' + msg.get('secondSection'), value="`" + msg.get('thirdSection') + "`", inline=False)
-                embed.set_footer(text="Powered by https://hitmandb.notex.app")
-        
-        emoji = ["<:rocco:823028032012025906>", "<:RoccoPog:837680147729088532>", "<:peepoSSip:836956012974964767>", "<:nightmare_47_mk2:834782513083449354>", "<:ioimoment:828451959283384351>", "<:LUL:759564041965666356>", "<:KEK:837936832373194812>", "<:gigachad47_R:835110788560584735>", "<:gigachad47_L:835110791060652052>", "<:cursed_47:835098987991269376>", "<:47what:836242357426585691>", "<:47ohshit:836567510345187348>", "<:47angry:836567784766308352>", "<:GWseremePeepoLife:838766302263902219>", "<:mario_smug:836540135692697611>", "<:mario_47_cursed:836239391454134373>", "These are not the hashes you're looking for", "The hashes are in another castle!"]
 
-        url = "https://hitmandb.notex.app/search"
-        data = string
-        data2 = resourcetype
-        dataSub = ","
-        if dataSub in data:
-          string.split(',', maxsplit=1)
-          data = string[0]
-        else:
-          data = string
-        params = data + ",10," + data2.lower() + ",0"
-        r = requests.post(url, data = params)
-        if re.search(r'^10.*\|', r.text):
-          embedNoResult = discord.Embed(title="Hash Lookup", color=0xC60000)
-          embedNoResult.add_field(name="No Results", value=random.choice(emoji), inline=False)
-          embedNoResult.set_footer(text="Powered by https://hitmandb.notex.app")
-          await ctx.send(embed=embedNoResult)
-        else:
-          arrOfMessages = []
-          multiStr = r.text.split('|')
-          del multiStr[-1]
-          del multiStr[-1]
-          totalRes = len(multiStr)
-          for i in multiStr:
-            await reWriteString(i)
-          await ctx.send(embed=embed)
+      emoji = [
+        "<:47Angry:836567784766308352>",
+        "<:47Constipated:846427458872803328>",
+        "<:47OhShit:836567510345187348>",
+        "<:47Stare:842321510835814442>",
+        "<:47What:836242357426585691>",
+        "<:abrakHelicopter:855422380183519243>",
+        "<:angrydoggo:861855672232706058>",
+        "<:bruh:854676551407501312>",
+        "<:cateeth:859053529200459776>",
+        "<:cursed47:835098987991269376>",
+        "<:drunkDiana:842322054484328448>",
+        "<:gigachad47_L:835110791060652052>",
+        "<:gigachad47_R:835110788560584735>",
+        "<:glonk_47:848759340588073000>",
+        "<:goose_stab:862723944217182238>",
+        "<:GWseremePeepoLife:838766302263902219>",
+        "<:GWseremePeepoThink:861856123795800103>",
+        "<:GWvertiPeepoChrist:851983156373487646>",
+        "<:hakan:855418090220683304>",
+        "<:hihi:859053465007554571>",
+        "<:ioiMoment:828451959283384351>",
+        "<:KEK:837936832373194812>",
+        "<:kevin:855406759018758174>",
+        "<:LUL:759564041965666356>",
+        "<:lulAgony:847506792498200586>",
+        "<:mario47Cursed:836239391454134373>",
+        "<:marioSmug:836540135692697611>",
+        "<:misinfo_47:855178644984168458>",
+        "<:mkII:759684183131160576>",
+        "<:mkIII:759684147215728710>",
+        "<:mkIIWorn:759684167537000469>",
+        "<:peepoEvol:855404692494745610>",
+        "<:peepoMad:857237684288618508>",
+        "<:peepoMadTongue:857660298546511884>",
+        "<:peepoPizza2:856816884485455892>",
+        "<:peepoSSip:836956012974964767>",
+        "<:rocco:823028032012025906>",
+        "<:roccoCringe:842692483972333571>",
+        "<:roccoCringeC:844205348368941086>",
+        "<:RoccoPog:837680147729088532>",
+        "<:roccoSmile:847514780913762345>",
+        "<:roccoSmile2:847514795192352778>",
+        "<:roccoThink:859039772725870633>",
+        "<:rpkg:849257066228744264>",
+        "<:SodersStare:862548891696889877>",
+        "<:TheCoolestNabeel:863560511697321995>",
+        "<:Wut:861165804166578176>",
+        "These are not the hashes you're looking for",
+        "The hashes are in another castle!"
+      ]
+
+      url = "https://hitmandb.notex.app/search"
+
+      reqJson = {
+        "search_term": string,
+        "number_of_results": 10,
+        "resource_type": resourcetype,
+        "page_number": 0
+      }
+
+      response = requests.post(url, json=reqJson)
+      data = response.json()
+      entry = data
+
+      embed = discord.Embed(title="Hash Lookup", color=0xC60000)
+
+      if (not entry["results"]):
+        embed.add_field(name="No Results", value=random.choice(emoji), inline=False)
+      else:
+        for y in range(len(entry['results'])):  
+          result = entry['results'][y]
+          embed.add_field(name = '{} {}'.format(result['hash'], result['type']), value= "`" + '{}'.format(result['string']) + "`", inline=False)
+
+      embed.set_footer(text="Powered by https://hitmandb.notex.app")
+      await ctx.send(embed = embed)
 
     @commands.command()
     async def md5(self, ctx, string):
