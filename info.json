@@ -1,7 +1,9 @@
 {
-    "author" : ["Notex"],
-    "name" : "Notex-Cogs",
-    "short" : "My personal Redbot cogs",
-    "description" : "My personal Redbot cogs",
-	"tags": []
+    "author": [
+        "Notex"
+    ],
+    "name": "Notex-Cogs",
+    "short": "My personal Redbot cogs",
+    "description": "My personal Redbot cogs",
+    "tags": []
 }
