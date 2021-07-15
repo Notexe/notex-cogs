@@ -83,7 +83,7 @@ class HashDB(commands.Cog):
         else:
             for y in range(len(entry['results'])):
                 result = entry['results'][y]
-                embed.add_field(name='{} {}'.format(
+                embed.add_field(name='{}.{}'.format(
                     result['hash'], result['type']), value="`" + '{}'.format(result['string']) + "`", inline=False)
 
         embed.set_footer(text="Powered by https://hitmandb.notex.app")
