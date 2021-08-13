@@ -1,4 +1,5 @@
 from redbot.core import commands
+from random import randrange
 import discord
 import requests
 import random
@@ -103,3 +104,28 @@ class HashDB(commands.Cog):
             embedNoString.add_field(
                 name="No string inputted", value="<:GWseremePeepoLife:838766302263902219>", inline=False)
             await ctx.send(embed=embedNoString)
+
+    @commands.command()
+    async def id(self, ctx: commands.Context, version=None):
+
+        def random_with_N_digits(n):
+            range_start = 10**(n-1)
+            range_end = (10**n)-1
+            return randrange(range_start, range_end)
+
+        if not version:
+            await ctx.send("**Error:** ID version required\nAllowed versions: official or peacock")
+            return
+        try:
+            version = str(version)
+            if version not in ["official", "peacock"]:
+                raise ValueError
+        except (ValueError, TypeError):
+            await ctx.send(
+                f"**Error:** Invalid version {version}." + " Allowed versions: official or peacock"
+            )
+            return
+        if version == "official":
+            await ctx.send("ID: 1-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
+        if version == "peacock":
+            await ctx.send("ID: 0-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
