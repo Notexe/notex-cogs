@@ -5,13 +5,7 @@
     "name": "HashDB",
     "short": "Hitman hash lookup",
     "description": "Powered by https://hitmandb.notex.app",
-    "requirements": [
-        "dislash.py==1.0.17"
-    ],
-    "min_python_version": [
-        3,
-        7,
-        2
-    ],
+    "requirements": [],
+    "min_python_version": [],
     "end_user_data_statement": "This cog does not store user data."
 }
