@@ -1,6 +1,5 @@
 from redbot.core import commands
 from random import randrange
-from dislash import *
 import discord
 import requests
 import random
@@ -129,67 +128,3 @@ class HashDB(commands.Cog):
             await ctx.send("ID: 1-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
         if version == "peacock":
             await ctx.send("ID: 0-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
-
-    @commands.command()
-    async def buttontest(self, ctx):
-        row_of_buttons = [
-            ActionRow(
-                Button(
-                    style=ButtonStyle.blurple,
-                    label="Click",
-                    # emoji=discord.PartialEmoji(name="\U0001faa8"),
-                    custom_id="click",
-                ),
-            ),
-        ]
-        row_of_buttons1 = [
-            ActionRow(
-                Button(
-                    style=ButtonStyle.blurple,
-                    label="Click",
-                    # emoji=discord.PartialEmoji(name="\U0001faa8"),
-                    custom_id="click1",
-                ),
-            ),
-        ]
-        row_of_buttons2 = [
-            ActionRow(
-                Button(
-                    style=ButtonStyle.blurple,
-                    label="Click",
-                    # emoji=discord.PartialEmoji(name="\U0001faa8"),
-                    custom_id="click2",
-                ),
-            ),
-        ]
-        msg = await ctx.reply(
-            "Button test thing",
-            components=row_of_buttons,
-            mention_author=False
-        )
-
-        on_click = msg.create_click_listener(timeout=60)
-        
-        @on_click.matching_id("click", cancel_others=True)
-        async def buttonclick1(inter):
-            await inter.reply(type=ResponseType.DeferredUpdateMessage)
-            await msg.edit(
-                content=f"You clicked the button, well done. I'm so proud.",
-                components=row_of_buttons1,
-            )
-
-        @on_click.matching_id("click1", cancel_others=True)
-        async def buttonclick2(inter):
-            await inter.reply(type=ResponseType.DeferredUpdateMessage)
-            await msg.edit(
-                content=f"Why did you click the button again? Stop it.",
-                components=row_of_buttons2,
-            )
-
-        @on_click.matching_id("click2", cancel_others=True)
-        async def buttonclick2(inter):
-            await inter.reply(type=ResponseType.DeferredUpdateMessage)
-            await msg.edit(
-                content=f"Stop, just stop.",
-                components=None,
-            )
