@@ -28,7 +28,7 @@ class HashDB(commands.Cog):
         embed = discord.Embed(title="Hash Lookup", color=0xC60000)
 
         if (not entry["results"]):
-            embed.add_field(name="No Results", inline=False)
+            embed.add_field(name="Error", value="No Results", inline=False)
         else:
             for y in range(len(entry['results'])):
                 result = entry['results'][y]
