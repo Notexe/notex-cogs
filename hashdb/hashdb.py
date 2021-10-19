@@ -1,11 +1,12 @@
+from discord.ext.commands.help import Paginator
 from redbot.core import commands
 from random import randrange
 import discord
 import requests
 import random
 import hashlib
+import crcengine
 import json
-
 
 class HashDB(commands.Cog):
     @commands.command()
@@ -84,11 +85,15 @@ class HashDB(commands.Cog):
         else:
             for y in range(len(entry['results'])):
                 result = entry['results'][y]
-                embed.add_field(name='{}.{}'.format(
-                    result['hash'], result['type']), value="`" + '{}'.format(result['string']) + "`", inline=False)
+                if not result['string']:
+                    embed.add_field(name='{}.{}'.format(
+                        result['hash'], result['type']), value="Unknown string <:bruh:854676551407501312>", inline=False)
+                else:
+                    embed.add_field(name='{}.{}'.format(
+                        result['hash'], result['type']), value="`" + '{}'.format(result['string']) + "`", inline=False)
 
         embed.set_footer(text="Powered by https://hitmandb.notex.app")
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed)
 
     @commands.command()
     async def md5(self, ctx, string):
@@ -98,12 +103,12 @@ class HashDB(commands.Cog):
             embedMD5 = discord.Embed(title="MD5 Hash", color=0xC60000)
             embedMD5.add_field(name=string.lower(),
                                value="00" + md5Result[2:16], inline=False)
-            await ctx.send(embed=embedMD5)
+            await ctx.reply(embed=embedMD5)
         else:
             embedNoString = discord.Embed(title="MD5 Hash", color=0xC60000)
             embedNoString.add_field(
                 name="No string inputted", value="<:GWseremePeepoLife:838766302263902219>", inline=False)
-            await ctx.send(embed=embedNoString)
+            await ctx.reply(embed=embedNoString)
 
     @commands.command()
     async def id(self, ctx: commands.Context, version=None):
@@ -113,18 +118,34 @@ class HashDB(commands.Cog):
             return randrange(range_start, range_end)
 
         if not version:
-            await ctx.send("**Error:** ID version required\nAllowed versions: official or peacock")
+            await ctx.reply("**Error:** ID version required\nAllowed versions: official or peacock")
             return
         try:
             version = str(version)
             if version not in ["official", "peacock"]:
                 raise ValueError
         except (ValueError, TypeError):
-            await ctx.send(
+            await ctx.reply(
                 f"**Error:** Invalid version {version}." + " Allowed versions: official or peacock"
             )
             return
         if version == "official":
-            await ctx.send("ID: 1-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
+            await ctx.reply("ID: 1-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
         if version == "peacock":
-            await ctx.send("ID: 0-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
+            await ctx.reply("ID: 0-" + str(random_with_N_digits(2)) + "-" + str(random_with_N_digits(6)) + "-" + str(random_with_N_digits(2)))
+
+    @commands.command()
+    async def crc32(self, ctx, string):
+        if string:
+            crc_algorithm = crcengine.new('crc32')
+            crc32Result = crc_algorithm(string.encode('utf-8'))
+            crc32ResultHex = hex(crc32Result)[2:].upper()
+            embedCRC32 = discord.Embed(title="CRC32 Hash", color=0xC60000)
+            embedCRC32.add_field(name="Decimal:", value=crc32Result, inline=False)
+            embedCRC32.add_field(name="Hexadecimal:", value=crc32ResultHex, inline=False)
+            await ctx.reply(embed=embedCRC32)
+        else:
+            embedNoString = discord.Embed(title="CRC32 Hash", color=0xC60000)
+            embedNoString.add_field(
+                name="Enter a string", value="<:bruh:854676551407501312>", inline=False)
+            await ctx.reply(embed=embedNoString)
