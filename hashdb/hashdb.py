@@ -12,58 +12,6 @@ class HashDB(commands.Cog):
     @commands.command()
     async def hashdb(self, ctx, string, resourcetype: str = "any"):
 
-        emoji = [
-            "<:47Angry:836567784766308352>",
-            "<:47Constipated:846427458872803328>",
-            "<:47OhShit:836567510345187348>",
-            "<:47Stare:842321510835814442>",
-            "<:47What:836242357426585691>",
-            "<:abrakHelicopter:855422380183519243>",
-            "<:angrydoggo:861855672232706058>",
-            "<:bruh:854676551407501312>",
-            "<:cateeth:859053529200459776>",
-            "<:cursed47:835098987991269376>",
-            "<:drunkDiana:842322054484328448>",
-            "<:gigachad47_L:835110791060652052>",
-            "<:gigachad47_R:835110788560584735>",
-            "<:glonk_47:848759340588073000>",
-            "<:goose_stab:862723944217182238>",
-            "<:GWseremePeepoLife:838766302263902219>",
-            "<:GWseremePeepoThink:861856123795800103>",
-            "<:GWvertiPeepoChrist:851983156373487646>",
-            "<:hakan:855418090220683304>",
-            "<:hihi:859053465007554571>",
-            "<:ioiMoment:828451959283384351>",
-            "<:KEK:837936832373194812>",
-            "<:kevin:855406759018758174>",
-            "<:LUL:759564041965666356>",
-            "<:lulAgony:847506792498200586>",
-            "<:mario47Cursed:836239391454134373>",
-            "<:marioSmug:836540135692697611>",
-            "<:misinfo_47:855178644984168458>",
-            "<:mkII:759684183131160576>",
-            "<:mkIII:759684147215728710>",
-            "<:mkIIWorn:759684167537000469>",
-            "<:peepoEvol:855404692494745610>",
-            "<:peepoMad:857237684288618508>",
-            "<:peepoMadTongue:857660298546511884>",
-            "<:peepoPizza2:856816884485455892>",
-            "<:peepoSSip:836956012974964767>",
-            "<:rocco:823028032012025906>",
-            "<:roccoCringe:842692483972333571>",
-            "<:roccoCringeC:844205348368941086>",
-            "<:RoccoPog:837680147729088532>",
-            "<:roccoSmile:847514780913762345>",
-            "<:roccoSmile2:847514795192352778>",
-            "<:roccoThink:859039772725870633>",
-            "<:rpkg:849257066228744264>",
-            "<:SodersStare:862548891696889877>",
-            "<:TheCoolestNabeel:863560511697321995>",
-            "<:Wut:861165804166578176>",
-            "These are not the hashes you're looking for",
-            "The hashes are in another castle!"
-        ]
-
         url = "https://hitmandb.notex.app/search"
 
         reqJson = {
@@ -80,14 +28,13 @@ class HashDB(commands.Cog):
         embed = discord.Embed(title="Hash Lookup", color=0xC60000)
 
         if (not entry["results"]):
-            embed.add_field(name="No Results",
-                            value=random.choice(emoji), inline=False)
+            embed.add_field(name="No Results", inline=False)
         else:
             for y in range(len(entry['results'])):
                 result = entry['results'][y]
                 if not result['string']:
                     embed.add_field(name='{}.{}'.format(
-                        result['hash'], result['type']), value="Unknown string <:bruh:854676551407501312>", inline=False)
+                        result['hash'], result['type']), value="Unknown string", inline=False)
                 else:
                     embed.add_field(name='{}.{}'.format(
                         result['hash'], result['type']), value="`" + '{}'.format(result['string']) + "`", inline=False)
@@ -107,7 +54,7 @@ class HashDB(commands.Cog):
         else:
             embedNoString = discord.Embed(title="MD5 Hash", color=0xC60000)
             embedNoString.add_field(
-                name="No string inputted", value="<:GWseremePeepoLife:838766302263902219>", inline=False)
+                name="Error", value="Please enter a string", inline=False)
             await ctx.reply(embed=embedNoString)
 
     @commands.command()
@@ -147,5 +94,5 @@ class HashDB(commands.Cog):
         else:
             embedNoString = discord.Embed(title="CRC32 Hash", color=0xC60000)
             embedNoString.add_field(
-                name="Enter a string", value="<:bruh:854676551407501312>", inline=False)
+                name="Error", value="Please enter a string", inline=False)
             await ctx.reply(embed=embedNoString)
