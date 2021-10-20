@@ -9,6 +9,9 @@ import crcengine
 import json
 
 class HashDB(commands.Cog):
+    async def red_delete_data_for_user(self, **kwargs):
+        """Nothing to delete"""
+        return
     @commands.command()
     async def hashdb(self, ctx, string, resourcetype: str = "any"):
 
