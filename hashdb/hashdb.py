@@ -156,8 +156,11 @@ class HashDB(commands.Cog):
                     await embed1.remove_reaction(reaction, user)
 
             except asyncio.TimeoutError:
-                await embed1.clear_reactions()
-                break
+                try:
+                    await embed1.clear_reactions()
+                    break
+                except Exception:
+                    break
                 # ending the loop if user doesn't react after x seconds
 
     @commands.command()
