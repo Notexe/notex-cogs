@@ -6,10 +6,8 @@ from redbot.core.bot import Red
 import asyncio
 import discord
 import requests
-import random
 import hashlib
 import crcengine
-import json
 
 
 class HashDB(commands.Cog):
@@ -61,14 +59,14 @@ class HashDB(commands.Cog):
 
         embed1 = await ctx.reply(embed=embed)
         await embed1.add_reaction("◀️")
+        await embed1.add_reaction("❌")
         await embed1.add_reaction("▶️")
 
         def check(reaction, user):
-            # return user == ctx.author and str(reaction.emoji) in ["◀️", "▶️"]
             return (
                 reaction.message.id == embed1.id
                 and user == ctx.author
-                and str(reaction.emoji) in ["◀️", "▶️"]
+                and str(reaction.emoji) in ["◀️", "❌", "▶️"]
             )
 
         while True:
@@ -154,6 +152,9 @@ class HashDB(commands.Cog):
                     )
                     await embed1.edit(embed=embed)
                     await embed1.remove_reaction(reaction, user)
+
+                elif str(reaction.emoji) == "❌":
+                    await embed1.delete()
 
             except asyncio.TimeoutError:
                 try:
