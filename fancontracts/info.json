@@ -1,0 +1,11 @@
+{
+    "author": [
+        "Notex"
+    ],
+    "name": "FanContracts",
+    "short": "FanContracts hash lookup",
+    "description": "Looks up contracts using the API provided by https://fancontracts.com",
+    "requirements": [],
+    "min_python_version": [],
+    "end_user_data_statement": "This cog does not store user data."
+}
