@@ -15,3 +15,6 @@ Generates a MD5 hash from a given string and replaces the first two characters w
 
 Example:
 `5E12FFEC093C3B75B57245DC9B9A2AC8` becomes `0012FFEC093C3B75`
+
+## fancontracts
+Returns contract information from https://fancontracts.com
