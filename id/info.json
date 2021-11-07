@@ -1,0 +1,11 @@
+{
+    "author": [
+        "Notex"
+    ],
+    "name": "ID",
+    "short": "Hitman contract ID generator",
+    "description": "",
+    "requirements": [],
+    "min_python_version": [],
+    "end_user_data_statement": "This cog does not store user data."
+}

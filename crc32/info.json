@@ -1,0 +1,11 @@
+{
+    "author": [
+        "Notex"
+    ],
+    "name": "CRC32",
+    "short": "Hitman CRC32 calculator",
+    "description": "",
+    "requirements": [],
+    "min_python_version": [],
+    "end_user_data_statement": "This cog does not store user data."
+}
