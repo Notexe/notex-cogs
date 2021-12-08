@@ -1,0 +1,41 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2021-12-08 09:02+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: redgettext 3.3\n"
+
+#: hashdb.py:14
+#, docstring
+msgid "HashDB Cog"
+msgstr ""
+
+#: hashdb.py:24
+#, docstring
+msgid ""
+"\n"
+"        Searches for a hash using hitmandb.notex.app\n"
+"\n"
+"        Parameters\n"
+"        ----------\n"
+"        string : str\n"
+"            The hash or path to search for.\n"
+"        \n"
+"        resourcetype : str\n"
+"            The type of resource to search for.\n"
+"            Valid options are:\n"
+"            - `any` and all the formats located at https://wiki.notex.app/glacier2/fileformats\n"
+"        \n"
+"        numberofresults : int\n"
+"            The number of results to return.\n"
+"\n"
+"        Usage:\n"
+"        `[p]hashdb <string> [Resource Type] [Number of results]`\n"
+"        "
+msgstr ""
