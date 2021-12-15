@@ -6,6 +6,5 @@
     "short": "Hitman hash lookup",
     "description": "Powered by https://hitmandb.notex.app",
     "requirements": [],
-    "min_python_version": [],
     "end_user_data_statement": "This cog does not store user data."
 }
