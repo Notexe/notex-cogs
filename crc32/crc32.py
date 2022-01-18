@@ -1,5 +1,3 @@
-from tkinter import N
-from unicodedata import name
 from redbot.core import commands
 from redbot.core.bot import Red
 import discord
