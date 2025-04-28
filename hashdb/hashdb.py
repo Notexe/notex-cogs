@@ -1,6 +1,6 @@
 from discord.ext.commands import bot
 from discord.ext.commands.help import Paginator
-from redbot.core import commands
+from redbot.core import commands, app_commands
 from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n
 import asyncio
@@ -19,10 +19,10 @@ class HashDB(commands.Cog):
         """Nothing to delete"""
         return
 
-    @commands.command()
-    async def hashdb(self, ctx, string, resourcetype: str = "any", numberofresults: int = 10):
+    @commands.hybrid_command()
+    async def hashdb(self, ctx: commands.Context, string, resourcetype: str = "any", numberofresults: int = 10):
         """
-        Searches for a hash using hitmandb.notex.app
+        Searches for a hash using hitmandb.glaciermodding.org
 
         Parameters
         ----------
@@ -32,7 +32,7 @@ class HashDB(commands.Cog):
         resourcetype : str
             The type of resource to search for.
             Valid options are:
-            - `any` and all the formats located at https://wiki.notex.app/glacier2/fileformats
+            - `any` and all the formats located at https://wiki.glaciermodding.org/glacier2/fileformats
         
         numberofresults : int
             The number of results to return.
@@ -46,7 +46,7 @@ class HashDB(commands.Cog):
             await ctx.reply("Number of results cannot exceed 30.")
             return
         else:
-            url = "https://hitmandb.notex.app/search"
+            url = "https://hitmandb.glaciermodding.org/search"
             pagenumber = 0
 
             reqJson = {
@@ -86,7 +86,7 @@ class HashDB(commands.Cog):
                             inline=False,
                         )
 
-            embed.set_footer(text="Powered by https://hitmandb.notex.app")
+            embed.set_footer(text="Powered by https://hitmandb.glaciermodding.org")
 
             embed1 = await ctx.reply(embed=embed)
             await embed1.add_reaction("◀️")
@@ -140,10 +140,13 @@ class HashDB(commands.Cog):
                                     )
 
                         embed.set_footer(
-                            text=f"Powered by https://hitmandb.notex.app - Page {pagenumber}"
+                            text=f"Powered by https://hitmandb.glaciermodding.org - Page {pagenumber}"
                         )
                         await embed1.edit(embed=embed)
-                        await embed1.remove_reaction(reaction, user)
+                        try:
+                            await embed1.remove_reaction(reaction, user)
+                        except:
+                            print("Missing permissions!")
 
                     elif str(reaction.emoji) == "◀️" and pagenumber > 0:
                         pagenumber -= 1
@@ -179,10 +182,13 @@ class HashDB(commands.Cog):
                                     )
 
                         embed.set_footer(
-                            text=f"Powered by https://hitmandb.notex.app - Page {pagenumber}"
+                            text=f"Powered by https://hitmandb.glaciermodding.org - Page {pagenumber}"
                         )
                         await embed1.edit(embed=embed)
-                        await embed1.remove_reaction(reaction, user)
+                        try:
+                            await embed1.remove_reaction(reaction, user)
+                        except:
+                            print("Missing permissions!")
 
                     elif str(reaction.emoji) == "❌":
                         await embed1.delete()
